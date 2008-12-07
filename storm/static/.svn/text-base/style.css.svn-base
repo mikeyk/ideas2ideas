@@ -1,0 +1,75 @@
+/* @override http://128.12.109.149:8000/storm/site_media/style.css */
+
+div#loginform {
+	position:relative;
+	float:right;
+}
+
+div#header {
+	position:relative;
+	height: 35px;
+	padding: 0.1em;
+}
+
+em{
+	font-weight: bold;
+}
+
+#error {
+	font-size:10px;
+	color:#CC0000;
+}
+
+div#newsfeed_container{
+	position:relative;
+	margin-top: 30px;
+}
+
+div#popular_boards {
+	width: 40%;
+	position: absolute;
+}
+
+div#recent_boards{
+	position: relative;
+	left: 50%;
+	width: 40%;
+}
+
+#logo img {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 10%;
+}
+
+#newsfeed_container ul li {
+	margin: 14px 0px;
+}
+
+a {
+	text-decoration: none;
+	color: #396e86;
+}
+a:hover{
+	text-decoration: underline;
+}
+
+span.emphasis {
+	font-size: 160%;
+}
+
+span.list-title {
+	font-size: 140%;
+}
+
+body{
+	font:Georgia, "Times New Roman", Times, serif;
+	height: 100%;
+}
+
+div#content {
+	position:relative;
+	height: 80%;
+/*  margin-top:20%;*/
+}

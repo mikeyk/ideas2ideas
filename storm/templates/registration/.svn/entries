@@ -1,0 +1,40 @@
+8
+
+dir
+28
+svn+quiet_ssh://mkrieger@graphics.stanford.edu/s/shares/projects/hci/massdesign/src/i2i/storm/templates/registration
+svn+quiet_ssh://mkrieger@graphics.stanford.edu/s/shares/projects/hci/massdesign/src
+
+
+
+2008-06-26T23:37:13.956282Z
+3
+mkrieger
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+05218c3f-4e36-4851-a486-7eb50c82fc5f
+
+login.html
+file
+
+
+
+
+2008-08-22T18:06:12.000000Z
+1799d67831929a4c3e02a5da4a4dfb3e
+2008-06-26T23:37:13.956282Z
+3
+mkrieger
+

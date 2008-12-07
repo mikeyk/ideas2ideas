@@ -1,0 +1,30 @@
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^i2i/', include('i2i.foo.urls')),
+    (r'^storm/$', 'ideas2ideas.storm.views.index'),
+    (r'^storm/board/(\d+)/$', 'ideas2ideas.storm.views.board'),
+    (r'^storm/addidea/$', 'ideas2ideas.storm.views.addidea'),
+    (r'^storm/tagallideas/$', 'ideas2ideas.storm.views.tagideas'),
+    (r'^storm/addcluster/$', 'ideas2ideas.storm.views.addcluster'),
+    (r'^storm/addvote/$', 'ideas2ideas.storm.views.addvote'),
+    (r'^accounts/login/$', 'ideas2ideas.storm.views.login'),
+    (r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
+    (r'^profile/myprompts/$', 'ideas2ideas.storm.views.myprompts'),
+    (r'^storm/watchidea/$', 'ideas2ideas.storm.views.watchidea'),
+    (r'^storm/unwatchidea/$', 'ideas2ideas.storm.views.unwatchidea'),
+    (r'^storm/showclusters/$', 'ideas2ideas.storm.views.showclusters'),
+    (r'^storm/addcluster/$', 'ideas2ideas.storm.views.addcluster'),
+    (r'^storm/addideatocluster/$', 'ideas2ideas.storm.views.addideatocluster'),
+    (r'^storm/duplicatecluster/$', 'ideas2ideas.storm.views.duplicatecluster'),
+    (r'^storm/showclusterswithidea/$', 'ideas2ideas.storm.views.showclusterswithidea'),
+    (r'^storm/removeideafromcluster/$', 'ideas2ideas.storm.views.removeideafromcluster'),
+    (r'^storm/savecluster/$', 'ideas2ideas.storm.views.savecluster'),
+    (r'^storm/getclusterideas/(\d+)/$', 'ideas2ideas.storm.views.getclusterideas'),
+    (r'^storm/editcluster/(\d+)/$', 'ideas2ideas.storm.views.editcluster'),
+    (r'^news/$', 'ideas2ideas.storm.views.news'),                   
+    (r'^static/storm/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'ideas2ideas.storm/static/'}),
+    # Uncomment this line for admin:
+    (r'^admin/', include('django.contrib.admin.urls')),
+)
