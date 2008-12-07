@@ -72,6 +72,7 @@ ROOT_URLCONF = 'ideas2ideas.urls'
 
 SESSION_COOKIE_DOMAIN = 'mkrieger.org'
 
+LOGIN_URL = "/i2i/accounts/login"
 
 TEMPLATE_DIRS = (
     "/home/zeppomedio/webapps/ideas2ideas/ideas2ideas/templates",
