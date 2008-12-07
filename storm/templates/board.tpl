@@ -24,6 +24,9 @@ $(document).ready(function(){
 {% block title %}IdeaBoard for "{{board.prompt}}"{% endblock %}
 
 {% block content %}
+
+<a href="{% url index  %}">Back home</a>
+
 <div id="preinstructions" style="display:none;color:red;font-size:120%">Please accept this HIT before participating</div>
 <div id="instructions"></div>
 <script type="text/javascript" charset="utf-8">
