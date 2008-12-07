@@ -30,13 +30,13 @@
 			{% if user.is_authenticated %}
 		    	<p>Logged in as {{ user.username }}. <a href="/accounts/logout/">Log out?</a></p>
 			{% else %}
-			<a href="/accounts/login">Log in</a>
+			<a href="{% url login %}">Log in</a>
 			{# <form method="post" action="/accounts/login/"> #}
 			{# <!-- <label for="id_username">Username:</label> --> <input type="text" name="username"> #}
 			{# <!-- <label for="id_password">Password:</label> --> <input type="password" name="password" /> #}
 			{# <input type="submit" value="Login"> #}
 			{# </form> #}
-            <a href="/accounts/register">Sign up</a>
+            <a href="{% url create-account %}">Sign up</a>
             {% endif %}
         	{% if login_failed %}
             	<span id="error"> Your username and password do not match, please try again. Or sign up :) </p>
