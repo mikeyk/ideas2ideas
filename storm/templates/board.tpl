@@ -25,7 +25,9 @@ $(document).ready(function(){
 
 {% block content %}
 
-<a href="{% url index %}">Back home</a>
+<a href="{% url index %}">Back home</a> {% if not user.is_authenticated  %}
+	It doesn't look like you've logged in; you'll be able see ideas, but adding & watching won't work. Thanks!
+{% endif %} 
 
 <div id="preinstructions" style="display:none;color:red;font-size:120%">Please accept this HIT before participating</div>
 <div id="instructions"></div>
@@ -61,6 +63,7 @@ ideaboard.root_id = {{board.root_postit.id}};
 </script>
 
 <div id="topButtons">
+	
 {# <input type="button" value="Add new Idea" onclick="ideaboard.newIdea()"/> #}
 <input type="button" onclick="ideaboard.populateWithShuffled()" value="Shuffle ideas to see new ones"/>
 {# <input type="button" id="close_vis_button" value="Close tree view"/> #}
