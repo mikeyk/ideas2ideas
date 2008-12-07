@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'db/brainstorm'             # Or path to database file if using sqlite3.
+DATABASE_NAME = '/home/zeppomedio/webapps/ideas2ideas/ideas2ideas/db/brainstorm'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'brainstorm'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'brainstorm'         # Not used with sqlite3.
 DATABASE_HOST = '128.12.109.149'             # Set to empty string for localhost. Not used with sqlite3.
