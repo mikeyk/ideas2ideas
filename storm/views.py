@@ -13,7 +13,7 @@ import MySQLdb
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-@login_required
+# @login_required
 def board(request, board_id):
     # study-specific
     voting_enabled = False

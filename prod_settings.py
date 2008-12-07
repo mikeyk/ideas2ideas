@@ -66,13 +66,15 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
 )
 
+LOGIN_URL = "/i2i/accounts/login"
+
 LOGIN_REDIRECT_URL = "/i2i"
 
 ROOT_URLCONF = 'ideas2ideas.urls'
 
 SESSION_COOKIE_DOMAIN = 'mkrieger.org'
 
-LOGIN_URL = "/i2i/accounts/login"
+
 
 TEMPLATE_DIRS = (
     "/home/zeppomedio/webapps/ideas2ideas/ideas2ideas/templates",
