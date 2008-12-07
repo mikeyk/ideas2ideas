@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Example:
     # (r'^i2i/', include('i2i.foo.urls')),
 
-    (r'^$', 'ideas2ideas.storm.views.index'),
+    url(r'^$', 'ideas2ideas.storm.views.index', name="index"),
     url(r'^board/(?P<board_id>\d+)/$', 'ideas2ideas.storm.views.board', name="board"),
     (r'^addidea/$', 'ideas2ideas.storm.views.addidea'),
     (r'^tagallideas/$', 'ideas2ideas.storm.views.tagideas'),

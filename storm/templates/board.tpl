@@ -25,7 +25,7 @@ $(document).ready(function(){
 
 {% block content %}
 
-<a href="{% url index  %}">Back home</a>
+<a href="{% url index %}">Back home</a>
 
 <div id="preinstructions" style="display:none;color:red;font-size:120%">Please accept this HIT before participating</div>
 <div id="instructions"></div>
