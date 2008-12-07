@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.contrib.admin import site
 
 class Category(models.Model):
   name = models.TextField()
@@ -65,3 +66,9 @@ class Cluster(models.Model):
     return self.title
   class Admin:
     pass
+    
+site.register(Cluster)
+site.register(PostIt)
+site.register(Board)
+
+

@@ -23,7 +23,7 @@ DEFAULT_CHARSET='utf-8'
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -68,7 +68,13 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'ideas2ideas.urls'
 
+SESSION_COOKIE_DOMAIN = '127.0.0.1'
+
+LOGIN_REDIRECT_URL = "/"
+
+
 TEMPLATE_DIRS = (
+    "/Users/mkrieger/src/i2i/ideas2ideas/templates/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

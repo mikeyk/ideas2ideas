@@ -124,7 +124,7 @@ var ideaboard = {
 		var successFn = function(msg){
         	document.getElementById('numClusters').innerHTML = parseInt(msg) + " clusters";
       	};
-		$.post("/storm/r/", post, successFn);
+		$.post("/r/", post, successFn);
 	});
 	
 	$('#tag_ideas_btn').click(function(event) {
@@ -143,7 +143,7 @@ var ideaboard = {
 		post.board_id = ideaboard.board_id;
 		post.ideas = list;
 		post.tags = answer;
-		$.post("/storm/tagallideas/", post);
+		$.post("/tagallideas/", post);
 	});
 
 	
@@ -223,7 +223,7 @@ createNewCluster:function(eve) {
 	  
  	$.ajax({
 		type:"POST",
-		url:"/storm/addcluster/",
+		url:"/addcluster/",
 		success: successFn});
   },
   
@@ -239,7 +239,7 @@ enterClusterMode: function(e) {
 	 
  	$.ajax({
 		type:"GET",
-		url:"/storm/showclusters/",
+		url:"/showclusters/",
 		success: successFn});
   },
 
@@ -257,7 +257,7 @@ removeIdeaFromCluster: function(e, id) {
 	  };
 	  $.ajax({
       type: "POST",
-      url: "/storm/removeideafromcluster/",
+      url: "/removeideafromcluster/",
       data: data,
       success: successFn});
 },
@@ -268,7 +268,7 @@ saveCluster: function(value, id) {
 	}
 	$.ajax({
 		   type:"POST",
-		   url:"/storm/savecluster/",
+		   url:"/savecluster/",
 		   data:data,
 		   success:successFn});
 },
@@ -287,7 +287,7 @@ addIdeaToCluster: function(e,id) {
 	  };
 	  $.ajax({
       type: "POST",
-      url: "/storm/addideatocluster/",
+      url: "/addideatocluster/",
       data: data,
       success: successFn});
 },
@@ -304,7 +304,7 @@ duplicateCluster: function(id) {
 	
 	$.ajax({
     type: "POST",
-    url: "/storm/duplicatecluster/",
+    url: "/duplicatecluster/",
     data: data,
     success: successFn});
 },
@@ -322,7 +322,7 @@ duplicateCluster: function(id) {
 	 
  	$.ajax({
 		type: "POST",
-		url:"/storm/showclusterswithidea/",
+		url:"/showclusterswithidea/",
 		data: data,
 		success: successFn});
 	  
@@ -351,7 +351,7 @@ editCluster: function(e, id) {
 		}
 	 };
 	 
- 	$.getJSON("/storm/getclusterideas/"+id, successFn);
+ 	$.getJSON("/getclusterideas/"+id, successFn);
 	
 	 var nextFn = function(e) {
 		if(e == "Failed" ) {
@@ -363,7 +363,7 @@ editCluster: function(e, id) {
 	 
 	$.ajax({
 	type:"GET",
-	url:"/storm/editcluster/" + id,
+	url:"/editcluster/" + id,
 	success: nextFn});
   },
   
@@ -384,7 +384,7 @@ editCluster: function(e, id) {
 	  
  	$.ajax({
 		type:"GET",
-		url:"/storm/watchidea/",
+		url:"/watchidea/",
 		success: successFn});
   },
   
@@ -406,7 +406,7 @@ editCluster: function(e, id) {
 	  };
 	  $.ajax({
       type: "POST",
-      url: "/storm/watchidea/",
+      url: "/watchidea/",
       data: data,
       success: successFn});
   },
@@ -425,7 +425,7 @@ editCluster: function(e, id) {
 	  };
 	  $.ajax({
       type: "POST",
-      url: "/storm/unwatchidea/",
+      url: "/unwatchidea/",
       data: data,
       success: successFn});
 	  
@@ -440,7 +440,7 @@ editCluster: function(e, id) {
 	  document.getElementById('status_msgs').innerHTML = "Thank you for your vote!";	
 	  $('#vote_'+id).html('+');
 	};
-	$.post("/storm/addvote/", post, successFn);
+	$.post("/addvote/", post, successFn);
   },
   
   negativeVote: function(e, id) {
@@ -452,7 +452,7 @@ editCluster: function(e, id) {
 	  document.getElementById('status_msgs').innerHTML = "Thank you for your vote!";		
   	  $('#vote_'+id).html('-');
   	};
-  	$.post("/storm/addvote/", post, successFn);
+  	$.post("/addvote/", post, successFn);
   },
 	  
   /* If possible (ie: if there are parents/children)
@@ -783,7 +783,7 @@ editCluster: function(e, id) {
     if(mTurk.accepted == true) data += "&user=mturk";
     $.ajax({
       type: "POST",
-      url: "/storm/addidea/",
+      url: "/addidea/",
       data: data,
       success: successFn});
   },

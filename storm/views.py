@@ -1,16 +1,19 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from ideas2ideas.storm.models import Board, PostIt, Cluster, WatchedPostIts
 from ideas2ideas.storm import json
 from ideas2ideas.storm.json import json_encode
 from django.contrib.auth import authenticate, login
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.template import loader, Context
 import MySQLdb
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
+@login_required
 def board(request, board_id):
     # study-specific
     voting_enabled = False
@@ -49,7 +52,8 @@ def board(request, board_id):
         return render_to_response('board.tpl', {'board':board_obj,'user':user, 'watched_ideas':watched, 'num_clusters':num_clusters, 'voting_enabled':voting_enabled, 'sort_by_popular':sort_by_popular})
         
 def index(request):
-    return render_to_response("index.tpl", {'user':request.user,'login_failed':False})
+    boards = Board.objects.filter(active="1").order_by('-id')
+    return render_to_response("index.tpl", {'board_set': boards, 'user':request.user,'login_failed':False})
 
 def addvote(request):
     post = request.POST
@@ -64,8 +68,8 @@ def addvote(request):
 def showclusterswithidea(request):
     post = request.POST
     pid = post['id']
-    user = request.session['user']
-    board = request.session['board']
+    user = request.user
+    board = request.session.get('board', "")
     postit = PostIt.objects.filter(id=pid)[0]
     clusters = postit.cluster_set.all()
     t = loader.get_template('sidebar.tpl')
@@ -75,7 +79,7 @@ def showclusterswithidea(request):
 
 def watchidea(request):
     post = request.REQUEST
-    user = request.session['user']
+    user = request.user
     if user is not None:
         if request.method == 'POST':
             key = post['id']
@@ -93,9 +97,9 @@ def watchidea(request):
         return HttpResponse("Failed")
 
 def showclusters(request):
-    user = request.session['user']
+    user = request.user
     board = request.session['board']
-    clusters = Cluster.objects.filter(prompt=board)
+    clusters = Cluster.objects.filter(prompt=board, author=user)
     t = loader.get_template('sidebar.tpl')
     for cluster in clusters:
         if cluster.postits.count() == 0:
@@ -105,12 +109,12 @@ def showclusters(request):
     return HttpResponse(rendered)
 
 def addcluster(request):
-    user = request.session['user']
+    user = request.user
     board = request.session['board']
     if user is None:
         cluster = Cluster(prompt=board)
     else:
-        cluster = Cluster(prompt=board, author=user, title="Cluster Title")
+        cluster = Cluster(prompt=board, author=user, title="New cluster")
     cluster.save()
     return HttpResponse(cluster.id)
 
@@ -121,11 +125,13 @@ def addideatocluster(request):
     editable=False
     postit = PostIt.objects.filter(id=pid)[0]
     cluster = Cluster.objects.filter(id=cid)[0]
-    if request.session['user'] is not None:
-        if request.session['user'] == cluster.author:
+    print request.user
+    if request.user.is_authenticated():
+        if request.user == cluster.author:
             editable = True
     elif cluster.author is None:
         editable = True
+
     if editable == True:
         cluster.postits.add(postit)
         t = loader.get_template('cluster_edit.tpl')
@@ -153,8 +159,8 @@ def removeideafromcluster(request) :
     editable = False
     if cluster.author is None:
         editable = True
-    if request.session['user'] is not None:
-        if request.session['user'] == cluster.author:
+    if request.user.is_authenticated():
+        if request.user == cluster.author:
             editable = True
     if editable == True:
         cluster.postits.remove(postit)
@@ -213,7 +219,7 @@ def duplicatecluster(request):
 def getclusterideas(request, clusterid):
     cluster = Cluster.objects.filter(id=clusterid)[0]
     pits = cluster.postits.all()
-    user = request.session['user']
+    user = request.user
     #if the user exists
     if cluster.author is None:
         data = json_encode(pits)
@@ -224,17 +230,20 @@ def getclusterideas(request, clusterid):
     return HttpResponse("Failed")
 
 def addidea(request):
-    user = None
+    auth_user = None
     if request.user.is_authenticated():
-        user = request.user
+        auth_user = request.user
     # HACK for mturk users
     elif 'user' in request.REQUEST and request.REQUEST['user'] == 'mturk':
-        user = authenticate(username='mturk', password='mturk')
+        auth_user = authenticate(username='mturk', password='mturk')
+    else:
+        raise Exception
+        
     if 'board_id' in request.REQUEST  and 'content' in request.REQUEST and 'parent_id' in request.REQUEST:
         newIdea = PostIt()
         board_obj = get_object_or_404(Board, pk=request.REQUEST['board_id'])
         newIdea.board = board_obj
-        newIdea.author = user
+        newIdea.author = auth_user
         newIdea.content = request.REQUEST['content']
         try:
             newIdea.parent = PostIt.objects.get(id=request.REQUEST['parent_id'])
@@ -284,13 +293,25 @@ def tagideas(request):
 #         board_obj = get_object_or_404(Board, pk=board_id)
 #         
 
+def create_account(request):
+
+    form = UserCreationForm()
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/accounts/login?next="+request.REQUEST.get("next", ""))
+    t = loader.get_template('registration/create.html')
+    c = Context({'form':form})
+    return HttpResponse(t.render(c))
+
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
-            request.session['user']=user
+            # request.session['user']=user
             return news(request)
         else:
             return render_to_response("index.tpl", {'user':request.user,'login_failed':True})
@@ -298,8 +319,8 @@ def login(request):
         return render_to_response("index.tpl", {'user':request.user,'login_failed':True})
     
 def news(request):
-    user = request.session['user']
-    return render_to_response("hpnews.tpl", {'user':user, 'news':True})
+    # user = request.session['user']
+    return render_to_response("homepage.tpl", {'user':request.user, 'news':True})
 
 def myprompts(request):
     user = request.session['user']

@@ -14,17 +14,18 @@
 	{% for cluster in clusters %}
 	<div id='cluster' name='{{cluster.id}}' style="margin:6px; background-color:#3333CC; font-size:90%; width:100px; height:70px">
 		{% ifequal cluster.author user %}
-			<input type="text" size=12 id='clustertitle_{{cluster.id}}' value="{{cluster.title}}" onChange="ideaboard.saveCluster(this.value, {{cluster.id}})" onkeydown="ideaboard.saveCluster(this.value, {{cluster.id}})"/><br/>
+		{{cluster.title}}<br/>
+					{# <input type="text" size=12 id='clustertitle_{{cluster.id}}' value="{{cluster.title}}" onChange="ideaboard.saveCluster(this.value, {{cluster.id}})" onkeydown="ideaboard.saveCluster(this.value, {{cluster.id}})"/><br/> #}
 		{% else %}
 			<p align="center" onClick='ideaboard.editCluster(event, {{cluster.id}});'>{{cluster.title}}</p>
 		{% endifequal %}
-		<div onClick='ideaboard.editCluster(event, {{cluster.id}});'>{{ cluster.postits.count }} ideas in this cluster	</div>
+		<div style='cursor: pointer' onClick='ideaboard.editCluster(event, {{cluster.id}});'>{{ cluster.postits.count }} ideas in this cluster	</div>
 	</div>
 	{% endfor %}
 {% endif %}
 </div>
 {% if clustermode %}
 <br/><div id="relevant cluster" style="top:90px;">
-<input type="button" value="Show clusters with current idea" onClick="ideaboard.showClustersWithCurrentIdea();" />
+<a href="#" onClick="ideaboard.showClustersWithCurrentIdea();">Show clusters with center idea</a>
 </div>
 {%endif%}

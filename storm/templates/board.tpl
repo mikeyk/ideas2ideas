@@ -63,7 +63,7 @@ ideaboard.root_id = {{board.root_postit.id}};
 {# <input type="button" id="close_vis_button" value="Close tree view"/> #}
 <form id="mturk_form" method="POST" action="http://www.mturk.com/mturk/externalSubmit">
 	<input type="hidden" id="assignmentId" name="assignmentId" value="">
-	<input type="submit" id="done_participating_button"  value="Done Participating"/>
+	{# <input type="submit" id="done_participating_button"  value="Done Participating"/> #}
 	<input type="hidden" id="idList" name="idList"/>
 </form>
 <input type="button" onclick="ideaboard.toggleSidebar();" value="Toggle clustering/watching sidebar"/>
@@ -71,8 +71,8 @@ ideaboard.root_id = {{board.root_postit.id}};
 </div>
 	<div id="sideboard_container">
  	Show:
-    <input type="button" id="show_clusters" value="Clusters" onclick="ideaboard.enterClusterMode(event)"/>
-    <input type="button" id="show_watched" value="Watched ideas" onclick="ideaboard.showWatched()"/>
+    <a href="#" onclick="ideaboard.enterClusterMode(event);return false">Clusters</a>
+    <a href="#" onclick="ideaboard.showWatched();return false">Watched ideas</a>
      <div id="sideboard"></div>
 </div>        
 <div id="status_msgs"></div>
